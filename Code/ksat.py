@@ -3,10 +3,10 @@ import itertools
 import random
 
 
-def random_ksat(n_vars, n_clauses, k=3, seed=None, satisfiable=True, n_solutions=None):
+def random_ksat(n_vars, n_clauses, k=3, seed=None, satisfiable=True, n_solutions=None, max_tries=20000):
     """Random K-SAT instance; with `n_solutions`, resample until it has exactly that many."""
     rng = random.Random(seed)
-    while True:
+    for _ in range(max_tries):
         clauses = []
         for _ in range(n_clauses):
             vars_ = rng.sample(range(1, n_vars + 1), k)
@@ -16,6 +16,8 @@ def random_ksat(n_vars, n_clauses, k=3, seed=None, satisfiable=True, n_solutions
             continue
         if not satisfiable or sols:
             return clauses
+    raise ValueError(f"no {k}-SAT instance with {n_vars} vars, {n_clauses} clauses and "
+                     f"{n_solutions} solutions found in {max_tries} tries; change --clauses or --solutions")
 
 
 def evaluate(clauses, assignment):
