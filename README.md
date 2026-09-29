@@ -37,7 +37,7 @@ Quantum-Search-KSAT/
 cd Code
 pip install -r requirements.txt
 python run_experiments.py                                  # FakeBrisbane noise model
-python run_experiments.py --vars 4 --clauses 6 --k 3        # 3-SAT, 4 variables, 2 solutions
+python run_experiments.py --vars 4 --clauses 7 --k 3        # 3-SAT, 4 variables, 2 solutions (12 qubits)
 python run_experiments.py --backend ibm_brisbane           # real hardware (saved IBM Quantum account)
 ```
 
