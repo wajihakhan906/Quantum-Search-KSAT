@@ -13,6 +13,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.ticker
 import numpy as np
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
@@ -215,11 +216,10 @@ def fig_baseline(d2):
     panel(a, "a")
     for kind, color, mk in (("k=1", "#2a78d6", "o"), ("k*", "#4a3aa7", "s")):
         rr = [r for r in rows if (r["k"] == 1 if kind == "k=1" else r["k"] == r["k_opt"])]
-        b.semilogy([r["n"] for r in rr], [1e3 * r["sim_time_per_circuit_s"] for r in rr], mk + "-", color=color,
+        b.plot([r["n"] for r in rr], [1e3 * r["sim_time_per_circuit_s"] for r in rr], mk + "-", color=color,
                    mec="white", mew=0.6, label=r"$k=1$" if kind == "k=1" else r"$k^*$")
-    b.set(xlabel=r"Qubits $n$", ylabel="Simulator time per circuit (ms)", xticks=range(2, 11, 2))
-    b.grid(True, which="major", axis="both")
-    b.legend(loc="upper left")
+    b.set(xlabel=r"Qubits $n$", ylabel="Simulator time per circuit (ms)", xticks=range(2, 11, 2), ylim=(0, None))
+    b.legend(loc="lower right")
     panel(b, "b")
     fig.tight_layout(w_pad=2)
     save_fig(fig, "fig02_simulator_baseline")
@@ -480,6 +480,9 @@ def step9(report, S):
         note = ("No hardware data yet: this compares the two noise models with each other, which shows how much "
                 "the predictions depend on the device. With hardware data, each model is compared with its own QPU.")
     rows = []
+    if not pairs:
+        report.append("> Needs two sources (hardware and model, or both models); skipped.\n")
+        return
     fig, ax = plt.subplots(figsize=(SINGLE, 3.1))
     ax.plot([0, 1], [0, 1], "-", color=MUTED, lw=0.8)
     ax.fill_between([0, 1], [-0.05, 0.95], [0.05, 1.05], color=GRID, alpha=0.6, lw=0, label="±0.05")
@@ -568,23 +571,19 @@ def step10(report, S, d1):
         sds = [np.std([r["p"] for r in rr if r["n"] == n], ddof=1) for n in ns]
         a.errorbar(ns, means, sds, fmt="s" + st["ls"], color=st["color"], mfc=st["mfc"], mew=0.9, capsize=1.5,
                    lw=1.2, label=src_label(s))
-        g = np.array([r["cz"] for r in rr]); p = np.array([r["p"] for r in rr])
-        b.plot(g, p, "s", color=st["color"], mfc=st["mfc"], mew=0.8, ms=3.5, label=src_label(s))
+        allr = [r for r in rows_of(d, "s7") + rows_of(d, "s8") if r["p_theory"] - 2 ** -r["n"] > 0.05]
+        g = np.array([r["cz"] for r in allr])
+        sig = np.array([(r["p"] - 2 ** -r["n"]) / (r["p_theory"] - 2 ** -r["n"]) for r in allr])
+        b.plot(g, sig, "s", color=st["color"], mfc=st["mfc"], mew=0.8, ms=3.5, label=src_label(s))
         F = fits[s]
         gg = np.logspace(0, 3.3, 200)
-        for n in ns:
-            pi = orc.p_theory(n, 1, 1)
-            sel = [r["cz"] for r in rr if r["n"] == n]
-            if sel:
-                g0 = np.mean(sel)
-                b.plot([g0], [pi * F**g0 + (1 - F**g0) / 2**n], "_", color=st["color"], ms=9, mew=1.4)
-        b.plot(gg, F**gg, st["ls"], color=st["color"], lw=1, alpha=0.8)
-    b.plot([], [], "-", color=INK2, lw=1, label=r"Fitted signal $F^{g}$")
+        b.plot(gg, F**gg, "-", color=st["color"], lw=1.2, alpha=0.9, label=f"fit $F^g$, F = {F:.4f}")
     a.set(xlabel=r"Qubits $n$", ylabel="P(marked state), $k=1$", ylim=(0, 1.05), xticks=ns)
     a.legend(loc="upper right", fontsize=6.3)
     panel(a, "a")
     b.set_xscale("log")
-    b.set(xlabel="CZ gates $g$", ylabel="P(marked) / signal $F^g$", ylim=(0, 1.05), xlim=(1, 2e3))
+    b.set(xlabel="CZ gates $g$", ylabel=r"Signal $(P-2^{-n})/(P_{ideal}-2^{-n})$", ylim=(-0.05, 1.1),
+          xlim=(1, 2e3))
     b.grid(True, which="major", axis="both")
     b.legend(loc="lower left", fontsize=6.3)
     panel(b, "b")
@@ -682,9 +681,11 @@ def step12(report, S):
         hw = is_hw(s)
         ax.plot(ratio, g, markers[dev_of(s)], ms=6.5, color=TECH_COLOR[t], mfc=TECH_COLOR[t] if hw else "white",
                 mew=1.3, mec=TECH_COLOR[t])
-        ax.annotate(TECH_LABEL[t], (ratio, g), xytext=(5, 2), textcoords="offset points", fontsize=6.2,
-                    color=INK2)
-    ax.set_xscale("log")
+        dy = {"dd": 5, "twirl": -8}.get(t, 2)
+        ax.annotate(TECH_LABEL[t], (ratio, g), xytext=(6, dy), textcoords="offset points", fontsize=6.2,
+                    color=INK2, va="center")
+    ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}×"))
+    ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:+.4f}"))
     ax.set(xlabel="QPU cost relative to no mitigation", ylabel=r"Gain $\Delta P$(solution)")
     ax.grid(True, axis="both")
     handles = [Line2D([], [], marker=markers[dv], ls="", color=INK2, mfc="white", label=f"{dv.capitalize()}")

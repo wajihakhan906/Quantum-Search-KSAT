@@ -1,0 +1,3 @@
+Source,Calibration date,Qubits,CZ error (median),Readout error (median),T1 (µs),T2 (µs)
+Model Marrakesh,2025-02-26 14:52:45-05:00,all qubits,0.003,0.010,197,118
+Model Marrakesh,2025-02-26 14:52:45-05:00,15 used,0.002,0.005,260,178

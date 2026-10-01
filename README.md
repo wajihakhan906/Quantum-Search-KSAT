@@ -46,6 +46,16 @@ python run_experiments.py --vars 4 --clauses 7 --k 3        # 3-SAT, 4 variables
 python run_experiments.py --backend ibm_brisbane           # real hardware (saved IBM Quantum account)
 ```
 
+## Full 12-step study (Stages A–C)
+`Code/study.py` with `Code/oracles.py` and `Code/study_analysis.py` runs the complete study:
+- Stage A: circuit design with three multi-controlled-gate constructions, and a simulator baseline over every marked state.
+- Stage B: K-SAT error mitigation (DD, twirling, TREX, ZNE, M3), K-SAT search, the iteration sweep and Grover scaling on
+  `ibm_kingston` and `ibm_marrakesh`, with noise-model predictions alongside.
+- Stage C: model accuracy, the noise-scaling fit, time-to-solution, bootstrap statistics and the cost–benefit comparison.
+
+**All results are collected in [Results/study/REPORT.md](Results/study/REPORT.md).** Figures are in `Figures/study/`.
+Run it with `python Code/run_all.py --study [--hardware]` (see [SETUP.md](SETUP.md)).
+
 ## Six-Step Pipeline on IBM Heron (Open plan)
 **New here? Follow [SETUP.md](SETUP.md)**: it covers installation (Windows, or WSL2 with an NVIDIA GPU) and the one-command run `python Code/run_all.py [--hardware]`.
 

@@ -1,0 +1,21 @@
+Source,Instance,Technique,P(clauses satisfied),Expected shots 1/P,Random 2ⁿ/3,Speed-up
+Model Marrakesh,5v,None,0.296,3.37,10.67,3.16×
+Model Marrakesh,5v,M3,0.302,3.31,10.67,3.22×
+Model Marrakesh,5v,DD,0.293,3.41,10.67,3.12×
+Model Marrakesh,5v,Twirling,0.291,3.43,10.67,3.11×
+Model Marrakesh,5v,TREX,0.309,3.24,10.67,3.30×
+Model Marrakesh,5v,ZNE,0.322,3.10,10.67,3.44×
+Model Marrakesh,5v,All,0.326,3.07,10.67,3.47×
+Model Marrakesh,5v,none (k=1),0.299,3.35,10.67,3.18×
+Model Marrakesh,5v,none (k=2),0.233,4.30,10.67,2.48×
+Model Marrakesh,5v,"none (rel.-phase, k=1)",0.419,2.39,10.67,4.47×
+Model Marrakesh,6v,None,0.070,14.32,21.33,1.49×
+Model Marrakesh,6v,M3,0.071,14.14,21.33,1.51×
+Model Marrakesh,6v,DD,0.079,12.60,21.33,1.69×
+Model Marrakesh,6v,Twirling,0.080,12.53,21.33,1.70×
+Model Marrakesh,6v,TREX,0.068,14.66,21.33,1.46×
+Model Marrakesh,6v,ZNE,0.065,15.28,21.33,1.40×
+Model Marrakesh,6v,All,0.080,12.57,21.33,1.70×
+Model Marrakesh,6v,none (k=1),0.065,15.40,21.33,1.39×
+Model Marrakesh,6v,none (k=3),0.039,25.76,21.33,0.83×
+Model Marrakesh,6v,"none (rel.-phase, k=1)",0.214,4.68,21.33,4.56×
