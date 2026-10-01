@@ -1,0 +1,11 @@
+# NVIDIA GPU simulator (RTX 4070 etc.). Linux or Windows WSL2 only, Python 3.10-3.13.
+# The GPU build replaces qiskit-aer, so remove that first:
+#   pip uninstall -y qiskit-aer && pip install -r requirements-gpu.txt
+# It ships its own CUDA 11.8 runtime; you only need a recent NVIDIA driver (>= 520).
+qiskit==2.5.2
+qiskit-aer-gpu-cu11==0.17.2
+qiskit-ibm-runtime==0.50.0
+numpy==2.4.6
+scipy==1.17.1
+matplotlib==3.11.2
+pylatexenc==2.11

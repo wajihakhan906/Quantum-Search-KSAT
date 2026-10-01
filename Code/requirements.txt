@@ -1,5 +1,8 @@
-qiskit>=1.2
-qiskit-aer>=0.15
-qiskit-ibm-runtime>=0.30
-matplotlib
-pylatexenc
+# Tested with Python 3.11 (3.10-3.12 work). Install:  pip install -r requirements.txt
+qiskit==2.5.2
+qiskit-aer==0.17.2
+qiskit-ibm-runtime==0.50.0
+numpy==2.4.6
+scipy==1.17.1
+matplotlib==3.11.2
+pylatexenc==2.11

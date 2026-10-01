@@ -26,7 +26,9 @@ Quantum-Search-KSAT/
 │   ├── run_experiments.py   # ideal vs. noisy runs, writes Results/ and Figures/
 │   ├── pipeline.py          # 6-step pipeline: simulate / estimate / submit / collect on IBM Heron QPUs
 │   ├── mitigation.py        # DD, TREX, Pauli twirling, ZNE (client-side, works on Aer and QPUs)
-│   ├── figures.py           # pipeline figures
+│   ├── figures.py           # publication figures (PDF + PNG) and LaTeX/CSV tables
+│   ├── run_all.py           # one command: environment check, simulation, real QPU, figures
+│   ├── requirements-gpu.txt # NVIDIA GPU simulator (Linux / WSL2)
 │   └── requirements.txt
 ├── Dataset/                 # DIMACS CNF instances
 ├── Figures/                 # success curves, histograms, circuit diagram
@@ -45,14 +47,16 @@ python run_experiments.py --backend ibm_brisbane           # real hardware (save
 ```
 
 ## Six-Step Pipeline on IBM Heron (Open plan)
+**New here? Follow [SETUP.md](SETUP.md)**: it covers installation (Windows, or WSL2 with an NVIDIA GPU) and the one-command run `python Code/run_all.py [--hardware]`.
+
 `Code/pipeline.py` runs the full study on the Open-plan QPUs **ibm_kingston**, **ibm_fez** and **ibm_marrakesh**
 (156-qubit Heron r2, CZ basis) or on their local noise models (`fake_kingston`, `fake_fez`, `fake_marrakesh`).
 
 | Step | What | Figure |
 |---|---|---|
-| 1-3 | Grover, one marked state of 2ⁿ, n = 2…10 (H + MCT oracle, MCZ diffuser, optimal iterations): P(marked) and search time, QASM simulator vs. QPU | `Figures/steps1-3_grover_<backend>.png` |
-| 4-5 | K-SAT with K = 5, 6, 3 clauses, on 5 and 6 variable qubits (+1 ancilla per clause), 0-2 iterations | `Figures/steps4-5_ksat_<backend>.png` |
-| 6 | K-SAT with and without DD, TREX, Pauli twirling, ZNE, and all combined, simulator vs. QPU | `Figures/step6_mitigation_<backend>.png` |
+| 1-3 | Grover, one marked state of 2ⁿ, n = 2…10 (H + MCT oracle, MCZ diffuser, optimal iterations): P(marked) and search time, QASM simulator vs. QPU | `Figures/fig_steps1-3_grover_<backend>.pdf` |
+| 4-5 | K-SAT with K = 5, 6, 3 clauses, on 5 and 6 variable qubits (+1 ancilla per clause), 0-2 iterations | `Figures/fig_steps4-5_ksat_<backend>.pdf` |
+| 6 | K-SAT with and without DD, TREX, Pauli twirling, ZNE, and all combined, simulator vs. QPU | `Figures/fig_step6_mitigation_<backend>.pdf` |
 
 ```bash
 cd Code

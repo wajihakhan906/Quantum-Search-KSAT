@@ -65,8 +65,8 @@ on the noise model is close to uniform (1/2ⁿ).
 These circuits have 537 and 792 CZ gates, which leaves them largely decohered on this noise model. Mitigation can only shift the
 fidelity by about ±0.015 here: there is too little signal left for ZNE to extrapolate. Also note that Aer does not model ZZ crosstalk, which is the main
 error DD suppresses on real hardware. Run `pipeline.py submit/collect` to get the QPU columns
-(`Results/pipeline_ibm_kingston.json`).
+(`Results/pipeline_ibm_kingston.json`). LaTeX tables: `tables_fake_kingston.tex`; CSV: `table_fake_kingston.csv`.
 
-![Steps 1-3](../Figures/steps1-3_grover_fake_kingston.png)
-![Steps 4-5](../Figures/steps4-5_ksat_fake_kingston.png)
-![Step 6](../Figures/step6_mitigation_fake_kingston.png)
+![Steps 1-3](../Figures/fig_steps1-3_grover_fake_kingston.png)
+![Steps 4-5](../Figures/fig_steps4-5_ksat_fake_kingston.png)
+![Step 6](../Figures/fig_step6_mitigation_fake_kingston.png)
