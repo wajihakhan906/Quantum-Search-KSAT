@@ -91,3 +91,32 @@ def grover_circuit(clauses, n_vars, iterations):
         qc.compose(diff, qubits=list(x), inplace=True)
     qc.measure(x, out)
     return qc
+
+
+def marked_state_oracle(n_qubits, marked):
+    """Phase oracle for one basis state |marked> (bitstring q_{n-1} ... q_0): X-conjugated MCT with H on the target."""
+    qc = QuantumCircuit(n_qubits, name="Oracle")
+    zeros = [i for i, b in enumerate(reversed(marked)) if b == "0"]
+    if zeros:
+        qc.x(zeros)
+    if n_qubits == 1:
+        qc.z(0)
+    else:
+        qc.h(n_qubits - 1)
+        qc.append(MCXGate(n_qubits - 1), list(range(n_qubits)))
+        qc.h(n_qubits - 1)
+    if zeros:
+        qc.x(zeros)
+    return qc
+
+
+def marked_state_circuit(n_qubits, marked, iterations):
+    """Grover search for a single marked state among 2^n: H, (MCT oracle + MCZ diffuser)^iterations, measure."""
+    qc = QuantumCircuit(n_qubits, n_qubits)
+    qc.h(range(n_qubits))
+    oracle, diff = marked_state_oracle(n_qubits, marked), diffuser(n_qubits)
+    for _ in range(iterations):
+        qc.compose(oracle, inplace=True)
+        qc.compose(diff, inplace=True)
+    qc.measure(range(n_qubits), range(n_qubits))
+    return qc
