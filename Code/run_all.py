@@ -3,6 +3,8 @@
     python run_all.py --check        # show Python, library and GPU status only
     python run_all.py                # Steps 1-6 on the QASM simulator + ibm_kingston noise model, paper figures
     python run_all.py --hardware     # the above, then Steps 3, 5, 6 on the real ibm_kingston QPU
+    python run_all.py --study        # the 12-step study (Stages A-C) offline: design, baseline, noise models
+    python run_all.py --study --hardware   # ... plus Stage B on ibm_kingston and ibm_marrakesh, then Stage C
 
 The IBM API key is read from the QISKIT_IBM_TOKEN environment variable, or typed in hidden when asked.
 It is never written to disk. The instance CRN comes from QISKIT_IBM_INSTANCE or is asked for.
@@ -25,7 +27,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-REQUIRED = ["qiskit", "qiskit-aer", "qiskit-ibm-runtime", "numpy", "scipy", "matplotlib", "pylatexenc"]
+REQUIRED = ["qiskit", "qiskit-aer", "qiskit-ibm-runtime", "numpy", "scipy", "matplotlib", "pylatexenc", "mthree"]
 FREE_PLAN_SECONDS = 600
 
 
@@ -83,12 +85,15 @@ def main():
     ap.add_argument("--device", default="auto", choices=["auto", "CPU", "GPU"], help="simulator device")
     ap.add_argument("--resimulate", action="store_true", help="redo the simulation even if results exist")
     ap.add_argument("--yes", action="store_true", help="do not ask before spending QPU time")
+    ap.add_argument("--study", action="store_true", help="run the 12-step study (study.py) instead")
     args = ap.parse_args()
 
     os.chdir(Path(__file__).resolve().parent)
     check_environment()
     if args.check:
         return
+    if args.study:
+        return run_study(args)
     import pipeline
 
     twin = "fake_" + args.backend.removeprefix("ibm_")
@@ -123,6 +128,29 @@ def main():
           "run this command again later - nothing is resubmitted)")
     pipeline.main(["wait", "--backend", args.backend, "--device", args.device])
     print(f"\nAll results are in Results/ and Figures/ (fig_*_{args.backend}.pdf compare QPU with simulation).")
+
+
+def run_study(args):
+    import study
+
+    out = ROOT / "Results" / "study"
+    if not (out / "step1_design.json").exists() or args.resimulate:
+        study.main(["design"])
+    if not (out / "step2_baseline.json").exists() or args.resimulate:
+        study.main(["baseline"])
+    if not all((out / f"source_{f}.json").exists() for f in ("fake_kingston", "fake_marrakesh")) or args.resimulate:
+        study.main(["predict"])
+    if args.hardware:
+        ask_credentials()
+        if not all((out / f"jobs_{d}.json").exists() for d in ("ibm_kingston", "ibm_marrakesh")):
+            study.main(["estimate"])
+            if not args.yes and input("Submit Stage B to ibm_kingston and ibm_marrakesh now? [y/N] ").strip().lower() != "y":
+                raise SystemExit("not submitted")
+            study.main(["submit"])
+        print("[hardware] waiting for IBM's queue (Ctrl+C is safe; rerun to resume - nothing is resubmitted)")
+        study.main(["collect", "--wait"])
+    study.main(["analyze"])
+    print("\nAll study results: Results/study/REPORT.md, Results/study/*.tex/*.csv, Figures/study/*.pdf/.png")
 
 
 if __name__ == "__main__":

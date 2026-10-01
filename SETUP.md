@@ -74,6 +74,17 @@ python Code/run_all.py --hardware     # then Steps 3, 5, 6 on the real ibm_kings
 
 ---
 
+## The 12-step study (Stages A–C)
+```bash
+python Code/run_all.py --study              # Stage A + noise-model predictions + Stage C (no IBM account)
+python Code/run_all.py --study --hardware   # also Stage B on ibm_kingston AND ibm_marrakesh (~4 min QPU)
+```
+Results go to `Results/study/REPORT.md` (every table and figure in one document), `Results/study/*.tex` (LaTeX)
+and `*.csv`, and `Figures/study/*.pdf/.png`. Individual steps: `python Code/study.py design | baseline | predict |
+estimate | submit | collect --wait | analyze`.
+
+---
+
 ## Outputs
 
 | File | Content |
