@@ -1,0 +1,3 @@
+Source,Instance,CZ (no ancilla),P (no ancilla),CZ (relative-phase V-chain),P (relative-phase),Gain
+Model Marrakesh,5v,257,0.296,98,0.420,+0.124
+Model Marrakesh,6v,541,0.070,136,0.213,+0.143
