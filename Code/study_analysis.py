@@ -254,8 +254,8 @@ def stage_b(report, S):
         for scope in ("device", "used"):
             x = c[scope]
             rows.append([src_label(s), c.get("calibration_date") or "–", "all qubits" if scope == "device"
-                         else f"{len(c['used_qubits'])} used", f3(x["cz_error_median"]),
-                         f3(x["readout_error_median"]), f"{x['t1_us_median']:.0f}" if x["t1_us_median"] else "–",
+                         else f"{len(c['used_qubits'])} used", f"{x['cz_error_median']:.2e}",
+                         f"{x['readout_error_median']:.2e}", f"{x['t1_us_median']:.0f}" if x["t1_us_median"] else "–",
                          f"{x['t2_us_median']:.0f}" if x["t2_us_median"] else "–"])
     report.append("### Step 4: device calibration\n")
     report.append(write_table("tab_step4_calibration", ["Source", "Calibration date", "Qubits", "CZ error (median)",
@@ -681,9 +681,6 @@ def step12(report, S):
         hw = is_hw(s)
         ax.plot(ratio, g, markers[dev_of(s)], ms=6.5, color=TECH_COLOR[t], mfc=TECH_COLOR[t] if hw else "white",
                 mew=1.3, mec=TECH_COLOR[t])
-        dy = {"dd": 5, "twirl": -8}.get(t, 2)
-        ax.annotate(TECH_LABEL[t], (ratio, g), xytext=(6, dy), textcoords="offset points", fontsize=6.2,
-                    color=INK2, va="center")
     ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}×"))
     ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:+.4f}"))
     ax.set(xlabel="QPU cost relative to no mitigation", ylabel=r"Gain $\Delta P$(solution)")
@@ -692,7 +689,11 @@ def step12(report, S):
                for dv in markers if any(dev_of(s) == dv for s in S)]
     handles += [Line2D([], [], marker="o", ls="", color=INK2, mfc=INK2, label="filled = QPU"),
                 Line2D([], [], marker="o", ls="", color=INK2, mfc="white", label="hollow = model")]
-    ax.legend(handles=handles, loc="best", fontsize=6.2)
+    tech = [Line2D([], [], marker="o", ls="", ms=6, color=TECH_COLOR[t], mfc=TECH_COLOR[t], label=TECH_LABEL[t])
+            for t in TECH]
+    leg = ax.legend(handles=tech, loc="upper left", fontsize=6.2, title="Technique", title_fontsize=6.5)
+    ax.add_artist(leg)
+    ax.legend(handles=handles, loc="lower right", fontsize=6.2)
     fig.tight_layout()
     save_fig(fig, "fig09_cost_benefit")
     return pts
@@ -714,6 +715,18 @@ def recommendations(report, S, pts, fits):
                      f"({per_sec[0]:+.3f})"
                      + (f"; best at ≤1.2× cost **{TECH_LABEL[best_cheap[2]]}** ({best_cheap[0]:+.3f})."
                         if best_cheap else "."))
+    for s, d in S.items():
+        gains = []
+        for inst in ("5v", "6v"):
+            a = [r["p"] for r in rows_of(d, "s5", "none") if r["instance"] == inst]
+            o = [r["p"] for r in rows_of(d, "opt") if r["instance"] == inst]
+            if a and o:
+                gains.append(np.mean(o) - np.mean(a))
+        best_mit = max((g for (src, t, r, g) in pts if src == s and t != "none"), default=0)
+        if gains:
+            lines.append(f"- **Compile first ({src_label(s)})**: the relative-phase V-chain construction raises "
+                         f"P(solution) by {np.mean(gains):+.3f} on average at no extra QPU cost, against "
+                         f"{best_mit:+.3f} for the best mitigation technique.")
     for s, F in fits.items():
         lines.append(f"- {src_label(s)}: effective CZ fidelity {F:.4f}. A circuit keeps only 1% of its ideal "
                      f"signal after ≈{math.log(0.01) / math.log(F):.0f} CZ gates, so compilation (fewer CZ) matters "
