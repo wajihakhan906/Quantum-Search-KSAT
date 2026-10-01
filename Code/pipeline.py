@@ -11,6 +11,7 @@ Step 6    K-SAT with and without error mitigation (none, DD, TREX, twirling, ZNE
     python pipeline.py estimate --backend ibm_kingston   # QPU-time estimate vs. the Open plan's 10 min
     python pipeline.py submit   --backend ibm_kingston   # 3 jobs (one per hardware step), job IDs saved
     python pipeline.py collect  --backend ibm_kingston   # fetch results, write Results/ and Figures/
+    python pipeline.py wait     --backend ibm_kingston   # poll the queue until the jobs finish, then collect
 
 The IBM account is read from --token/--instance, the QISKIT_IBM_TOKEN/QISKIT_IBM_INSTANCE environment
 variables, or a saved account (QiskitRuntimeService.save_account). --backend auto picks the least busy of
@@ -35,6 +36,20 @@ from ksat import random_ksat, solutions, write_dimacs
 ROOT = Path(__file__).resolve().parent.parent
 OPEN_PLAN_QPUS = ("ibm_kingston", "ibm_fez", "ibm_marrakesh")
 STEPS = {"grover": "Steps 1-3", "ksat": "Steps 4-5", "mitigation": "Step 6"}
+SIM_DEVICE = "CPU"  # set by --device; "GPU" needs qiskit-aer-gpu-cu11 (Linux / WSL2)
+
+
+def aer_options():
+    return {"device": "GPU", "batched_shots_gpu": True} if SIM_DEVICE == "GPU" else {}
+
+
+def pick_device(requested):
+    available = AerSimulator().available_devices()
+    if requested == "auto":
+        return "GPU" if "GPU" in available else "CPU"
+    if requested == "GPU" and "GPU" not in available:
+        raise SystemExit("Aer reports no GPU; install qiskit-aer-gpu-cu11 on Linux/WSL2 (see SETUP.md) or use --device CPU")
+    return requested
 
 
 # ----------------------------------------------------------------------------- backends
@@ -96,7 +111,7 @@ def experiments(args):
 
 def ideal_reference(exps, shots):
     """Exact distribution and QASM-simulator run (probabilities and wall time) for each experiment."""
-    sim = AerSimulator(seed_simulator=7)
+    sim = AerSimulator(seed_simulator=7, **aer_options())
     ideal = {}
     cache = {}
     for e in exps:
@@ -166,10 +181,10 @@ def pub_times(result, n_pubs):
 def run_local(jobs, device):
     from qiskit_ibm_runtime import SamplerV2
 
-    sampler = SamplerV2(mode=AerSimulator.from_backend(device, seed_simulator=7))
+    sampler = SamplerV2(mode=AerSimulator.from_backend(device, seed_simulator=7, **aer_options()))
     out = {}
     for step, job in jobs.items():
-        print(f"simulating {STEPS[step]} ({len(job['pubs'])} circuits) on {device.name} noise model")
+        print(f"simulating {STEPS[step]} ({len(job['pubs'])} circuits) on {device.name} noise model [{SIM_DEVICE}]")
         res = sampler.run(job["pubs"]).result()
         out[step] = {"counts": [counts_of(r) for r in res], "times": [None] * len(job["pubs"])}
     return out
@@ -218,13 +233,14 @@ def report(results, tag, args, sim=None):
     print("wrote", path.relative_to(ROOT))
     import figures
 
-    figures.make_all(results, tag, sim)
+    figures.make_all(results, tag, sim, args.shots)
 
 
 # ----------------------------------------------------------------------------- commands
-def main():
+def main(argv=None):
+    global SIM_DEVICE
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["simulate", "estimate", "submit", "collect"])
+    ap.add_argument("command", choices=["simulate", "estimate", "submit", "collect", "wait"])
     ap.add_argument("--backend", help="fake_kingston/fake_fez/fake_marrakesh, ibm_kingston/ibm_fez/ibm_marrakesh "
                                       "or auto (default: fake_kingston for simulate, auto otherwise)")
     ap.add_argument("--token")
@@ -239,13 +255,16 @@ def main():
     ap.add_argument("--randomizations", type=int, default=8, help="twirling / TREX randomizations")
     ap.add_argument("--budget", type=float, default=480, help="refuse to submit above this QPU estimate (s)")
     ap.add_argument("--seed", type=int, default=5)
-    args = ap.parse_args()
+    ap.add_argument("--device", choices=["auto", "CPU", "GPU"], default="auto", help="Aer simulator device")
+    ap.add_argument("--force", action="store_true", help="submit even if jobs for this backend were already sent")
+    args = ap.parse_args(argv)
+    SIM_DEVICE = pick_device(args.device)
     args.backend = args.backend or ("fake_kingston" if args.command == "simulate" else "auto")
     if args.command == "simulate" and not args.backend.startswith("fake_"):
         ap.error("simulate runs on a noise model; use a fake_ backend (e.g. fake_kingston)")
 
-    if args.command == "collect":
-        return collect(args)
+    if args.command in ("collect", "wait"):
+        return collect(args, wait=args.command == "wait")
     exps = experiments(args)
 
     device = get_device(args)
@@ -253,11 +272,15 @@ def main():
     jobs = build_pubs(exps, device, args)
     total = print_estimate(jobs, args.budget)
     if args.command == "estimate":
-        return
+        return total
     if args.command == "simulate":
         raw = run_local(jobs, device)
         return report(analyse(exps, ideal_reference(exps, args.shots), jobs, raw, device.name), device.name, args)
 
+    previous = ROOT / "Results" / f"jobs_{device.name}.json"
+    if previous.exists() and not args.force:
+        raise SystemExit(f"{previous.relative_to(ROOT)} exists: these jobs were already submitted. Run "
+                         f"`wait`/`collect` instead (or --force to spend QPU time again)")
     if total > args.budget:
         raise SystemExit(f"estimated {total:.0f} s exceeds --budget {args.budget:.0f} s; "
                          "lower --shots/--n-max or raise --budget")
@@ -276,7 +299,7 @@ def main():
     print("job IDs saved to", path.relative_to(ROOT), f"- run `python pipeline.py collect --backend {device.name}`")
 
 
-def collect(args):
+def collect(args, wait=False):
     path = ROOT / "Results" / f"jobs_{args.backend}.json"
     if not path.exists():
         raise SystemExit(f"{path} not found - run submit first (use the concrete backend name, not auto)")
@@ -293,8 +316,14 @@ def collect(args):
     for step, job_id in manifest["jobs"].items():
         job = svc.job(job_id)
         status = job.status()
+        while wait and status in ("INITIALIZING", "QUEUED", "VALIDATING", "RUNNING"):
+            print(f"{time.strftime('%H:%M:%S')}  {STEPS[step]} job {job_id}: {status} - checking again in 60 s")
+            time.sleep(60)
+            status = job.status()
         if status != "DONE":
-            raise SystemExit(f"job {job_id} ({STEPS[step]}) is {status}; try again later")
+            raise SystemExit(f"job {job_id} ({STEPS[step]}) is {status}; "
+                             + ("see the IBM dashboard for the error" if status in ("ERROR", "CANCELLED")
+                                else "run `wait` or try `collect` again later"))
         res = job.result()
         raw[step] = {"counts": [counts_of(r) for r in res], "times": pub_times(res, len(res))}
         usage[step] = job.usage() if hasattr(job, "usage") else None
