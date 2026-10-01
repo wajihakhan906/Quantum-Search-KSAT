@@ -1,3 +1,5 @@
 Source,n,k=0,k=1,k=2,k=3,best k (measured),k* (theory)
+Model Kingston,3,0.117,0.743,0.861,0.298,2,2
+Model Kingston,4,0.063,0.406,0.695,0.590,2,3
 Model Marrakesh,3,0.118,0.758,0.861,0.298,2,2
 Model Marrakesh,4,0.062,0.387,0.644,0.604,2,3
