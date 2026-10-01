@@ -24,6 +24,9 @@ Quantum-Search-KSAT/
 │   ├── grover.py            # clause-ancilla phase oracle, diffuser, Grover circuit
 │   ├── error_analysis.py    # gate-error budget and success prediction
 │   ├── run_experiments.py   # ideal vs. noisy runs, writes Results/ and Figures/
+│   ├── pipeline.py          # 6-step pipeline: simulate / estimate / submit / collect on IBM Heron QPUs
+│   ├── mitigation.py        # DD, TREX, Pauli twirling, ZNE (client-side, works on Aer and QPUs)
+│   ├── figures.py           # pipeline figures
 │   └── requirements.txt
 ├── Dataset/                 # DIMACS CNF instances
 ├── Figures/                 # success curves, histograms, circuit diagram
@@ -40,6 +43,28 @@ python run_experiments.py                                  # FakeBrisbane noise 
 python run_experiments.py --vars 4 --clauses 7 --k 3        # 3-SAT, 4 variables, 2 solutions (11 qubits)
 python run_experiments.py --backend ibm_brisbane           # real hardware (saved IBM Quantum account)
 ```
+
+## Six-Step Pipeline on IBM Heron (Open plan)
+`Code/pipeline.py` runs the full study on the Open-plan QPUs **ibm_kingston**, **ibm_fez** and **ibm_marrakesh**
+(156-qubit Heron r2, CZ basis) or on their local noise models (`fake_kingston`, `fake_fez`, `fake_marrakesh`).
+
+| Step | What | Figure |
+|---|---|---|
+| 1-3 | Grover, one marked state of 2ⁿ, n = 2…10 (H + MCT oracle, MCZ diffuser, optimal iterations): P(marked) and search time, QASM simulator vs. QPU | `Figures/steps1-3_grover_<backend>.png` |
+| 4-5 | K-SAT with K = 5, 6, 3 clauses, on 5 and 6 variable qubits (+1 ancilla per clause), 0-2 iterations | `Figures/steps4-5_ksat_<backend>.png` |
+| 6 | K-SAT with and without DD, TREX, Pauli twirling, ZNE, and all combined, simulator vs. QPU | `Figures/step6_mitigation_<backend>.png` |
+
+```bash
+cd Code
+python pipeline.py simulate                          # QASM + FakeKingston noise model, no account needed
+python pipeline.py estimate --backend ibm_kingston   # QPU-time estimate (~90 s of the 600 s monthly allowance)
+python pipeline.py submit   --backend ibm_kingston --instance "<CRN of your instance>" --token "<API key>"
+python pipeline.py collect  --backend ibm_kingston --instance "<CRN>" --token "<API key>"
+```
+`submit` sends 3 jobs (one per hardware step) in job mode, because the Open plan does not allow sessions. It also refuses to submit
+when the estimate exceeds `--budget` (480 s by default), and it saves the job IDs to `Results/jobs_<backend>.json`. Run `collect` once
+the jobs are done (queues can take hours). It plots the QPU results next to the matching `fake_` simulation.
+Error mitigation is applied on the client side (`Code/mitigation.py`), so the same code runs on the simulator and on the QPU.
 
 ## Author
 **Wajiha Rahim Khan**  

@@ -7,3 +7,4 @@ Instances are stored in standard **DIMACS CNF** format (`p cnf <vars> <clauses>`
 Generate new instances with `ksat.random_ksat(n_vars, n_clauses, k, seed, n_solutions)`, or load your own with
 `ksat.read_dimacs(path)`. Standard benchmark sets (e.g. SATLIB uf20-91) can be dropped here too, but note that
 each clause costs one ancilla qubit, so only small instances fit on current hardware.
+- `instance_k5_v5_c3_s10.cnf`, `instance_k6_v6_c3_s11.cnf`: the 5-SAT and 6-SAT instances (3 clauses) used by `Code/pipeline.py`.
