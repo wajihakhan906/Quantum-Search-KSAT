@@ -1,0 +1,89 @@
+mode,step,backend,job_id,note,est_seconds,qpu_seconds,utc
+local_test,step05,ibm_kingston,f0f631dd-1794-435e-b1cd-a3ee61d5f4d1,No mitigation r0,3.16,3.16,2026-10-01T08:18:29
+local_test,step05,ibm_kingston,a0dca04a-1438-4ed2-b3d6-5f0ed3350799,No mitigation r1,3.16,3.16,2026-10-01T08:18:44
+local_test,step05,ibm_kingston,59395e24-8cea-4592-bfdb-4cfcf74334a2,DD r0,3.16,3.16,2026-10-01T08:19:00
+local_test,step05,ibm_kingston,afda1785-0d96-4da7-89e4-d5c9bb6695dc,DD r1,3.16,3.16,2026-10-01T08:19:16
+local_test,step05,ibm_kingston,51661754-5fad-4771-9700-b7ad2a9278c9,Twirling r0,3.16,3.16,2026-10-01T08:19:32
+local_test,step05,ibm_kingston,31f64ffa-2164-4f1a-9ad1-083c050135db,Twirling r1,3.16,3.16,2026-10-01T08:19:47
+local_test,step05,ibm_kingston,42c8ad00-0698-4ebe-bfb4-5f2e8ff818aa,TREX r0,3.51,3.51,2026-10-01T08:20:02
+local_test,step05,ibm_kingston,1459b310-dfe5-4add-a593-01242d6e072c,TREX r1,3.51,3.51,2026-10-01T08:20:18
+local_test,step05,ibm_kingston,f024e9c6-3a82-40ca-aa72-9f9fbbb7666c,ZNE r0,12.48,12.48,2026-10-01T08:20:35
+local_test,step05,ibm_kingston,950a0ee7-211d-4028-bac6-0c3002e7f4fe,ZNE r1,12.48,12.48,2026-10-01T08:20:50
+local_test,step05,ibm_kingston,ec6ddb23-e0fc-46e0-91cf-a0e4a54c1b28,All combined r0,15.63,15.63,2026-10-01T08:21:06
+local_test,step05,ibm_kingston,0102a536-5088-4d6e-bec6-a5129db0d0f4,All combined r1,15.63,15.63,2026-10-01T08:21:22
+local_test,step05,ibm_marrakesh,67843ae6-1e74-4ef7-8a23-d3f5c8cb4821,No mitigation r0,3.18,3.18,2026-10-01T08:21:36
+local_test,step05,ibm_marrakesh,6f5e8f9a-36a3-449d-82c2-f290b826a9fb,No mitigation r1,3.18,3.18,2026-10-01T08:21:50
+local_test,step05,ibm_marrakesh,5cc6ce72-4df9-4083-b7d4-1c890228c2af,DD r0,3.18,3.18,2026-10-01T08:22:04
+local_test,step05,ibm_marrakesh,1c3124fd-a7a9-424b-9c27-824ab8c649c1,DD r1,3.18,3.18,2026-10-01T08:22:18
+local_test,step05,ibm_marrakesh,64058c5b-26eb-47d9-aaa6-19f7daa3ab5b,Twirling r0,3.18,3.18,2026-10-01T08:22:33
+local_test,step05,ibm_marrakesh,b1909ce7-f6b1-4b31-9e99-2975b6aec144,Twirling r1,3.18,3.18,2026-10-01T08:22:47
+local_test,step05,ibm_marrakesh,dd14f511-2f0c-4e52-9ffe-7917fdfc53d4,TREX r0,3.53,3.53,2026-10-01T08:23:01
+local_test,step05,ibm_marrakesh,cb450839-2aa8-4da1-b15a-7a05ccc345e0,TREX r1,3.53,3.53,2026-10-01T08:23:14
+local_test,step05,ibm_marrakesh,8f973e62-9538-4113-9270-908403f344e6,ZNE r0,12.59,12.59,2026-10-01T08:23:29
+local_test,step05,ibm_marrakesh,e79aae27-03e3-47df-aa11-f1489021b78b,ZNE r1,12.59,12.59,2026-10-01T08:23:42
+local_test,step05,ibm_marrakesh,902b2b42-18ce-45fc-af28-b97e4ede2a1b,All combined r0,15.76,15.76,2026-10-01T08:23:57
+local_test,step05,ibm_marrakesh,1a647140-6f39-4bc3-9e3e-03d39b497b3a,All combined r1,15.76,15.76,2026-10-01T08:24:11
+local_test,readout_cal,ibm_kingston,3b246d08-1858-4965-bf43-d76b6b0d7982,readout calibration,3.01,3.01,2026-10-01T08:24:26
+local_test,step06,ibm_kingston,9825a107-7967-455f-b3c8-cb12b7f141ca,K-SAT r0,4.62,4.62,2026-10-01T08:24:43
+local_test,step06,ibm_kingston,f54c749c-a23a-4565-a4cc-92e8de5e14c8,K-SAT r1,4.62,4.62,2026-10-01T08:24:58
+local_test,step06,ibm_kingston,8276cdd3-c138-4ae4-9270-94db593cd30f,K-SAT r2,4.62,4.62,2026-10-01T08:25:15
+local_test,readout_cal,ibm_marrakesh,204880a9-5cbd-44da-8c57-ed3359da0fe4,readout calibration,3.01,3.01,2026-10-01T08:25:28
+local_test,step06,ibm_marrakesh,10c55bee-094a-4555-ac7c-2e7991f7df74,K-SAT r0,4.67,4.67,2026-10-01T08:25:43
+local_test,step06,ibm_marrakesh,71172f72-95e3-47cc-8bd8-56b8f0f7322c,K-SAT r1,4.67,4.67,2026-10-01T08:25:56
+local_test,step06,ibm_marrakesh,5744b8b8-698b-4b95-a0ea-0b1ab479ca72,K-SAT r2,4.67,4.67,2026-10-01T08:26:11
+local_test,step07,ibm_kingston,5fc27f61-f6f5-4cba-a3d7-94dd3adf9254,sweep r0,6.11,6.11,2026-10-01T08:26:28
+local_test,step07,ibm_kingston,d0e64508-4822-4db3-8840-7e98abe1899f,sweep r1,6.11,6.11,2026-10-01T08:26:42
+local_test,step07,ibm_kingston,fd7efa71-fc2d-4fff-81af-5e7f0560038d,sweep r2,6.11,6.11,2026-10-01T08:26:59
+local_test,step07,ibm_marrakesh,60fff706-ab56-4ec0-b033-7d5e843168e2,sweep r0,6.13,6.13,2026-10-01T08:27:12
+local_test,step07,ibm_marrakesh,0224b3a8-0afc-4546-87a6-cc880f0c02ab,sweep r1,6.13,6.13,2026-10-01T08:27:27
+local_test,step07,ibm_marrakesh,70b1a739-b817-4f80-9c27-3d02e31d0308,sweep r2,6.13,6.13,2026-10-01T08:27:41
+local_test,step08,ibm_kingston,000137b0-d253-409f-af14-c40632520e38,scaling r0,14.77,14.77,2026-10-01T08:27:59
+local_test,step08,ibm_kingston,38e8af28-4e53-4be4-8720-fd289c3d130d,scaling r1,14.77,14.77,2026-10-01T08:28:16
+local_test,step08,ibm_kingston,fb7315db-1dc9-4803-a8c2-f55043865976,scaling r2,14.77,14.77,2026-10-01T08:28:32
+local_test,step08,ibm_marrakesh,c0417124-eed0-4142-846d-6b4b7c12145d,scaling r0,14.83,14.83,2026-10-01T08:28:47
+local_test,step08,ibm_marrakesh,cb1d0eae-808b-48b4-a5ac-ab222ba07781,scaling r1,14.83,14.83,2026-10-01T08:29:03
+local_test,step08,ibm_marrakesh,12177a98-0b4b-46e4-a08c-63d8001e60e5,scaling r2,14.83,14.83,2026-10-01T08:29:18
+hardware,step05,ibm_kingston,dav35erojkfs738t49h0,No mitigation r0,3.17,3.17,2026-10-01T10:15:32
+hardware,step05,ibm_kingston,dav35hihcrkc73e0jgmg,No mitigation r1,3.17,3.17,2026-10-01T10:15:41
+hardware,step05,ibm_kingston,dav35jjojkfs738t49ng,DD r0,3.17,3.17,2026-10-01T10:15:51
+hardware,step05,ibm_kingston,dav35m5vr3kc73enu2o0,DD r1,3.17,3.17,2026-10-01T10:16:02
+hardware,step05,ibm_kingston,dav35oqhcrkc73e0jgv0,Twirling r0,3.17,3.17,2026-10-01T10:16:15
+hardware,step05,ibm_kingston,dav35s3g95ks73ejbgog,Twirling r1,3.17,3.17,2026-10-01T10:16:28
+hardware,step05,ibm_kingston,dav35vjg95ks73ejbgt0,TREX r0,3.52,3.52,2026-10-01T10:16:51
+hardware,step05,ibm_kingston,dav365dvr3kc73enu390,TREX r1,3.52,3.52,2026-10-01T10:17:24
+hardware,step05,ibm_kingston,dav36ddvr3kc73enu3k0,ZNE r0,12.49,12.49,2026-10-01T10:17:44
+hardware,step05,ibm_kingston,dav36idvr3kc73enu3qg,ZNE r1,12.49,12.49,2026-10-01T10:18:02
+hardware,step05,ibm_kingston,dav36n3g95ks73ejbhqg,All combined r0,15.64,15.64,2026-10-01T10:19:18
+hardware,step05,ibm_kingston,dav379qhcrkc73e0jipg,All combined r1,15.64,15.64,2026-10-01T10:23:34
+hardware,step05,ibm_marrakesh,dav399tvr3kc73enu6sg,No mitigation r0,3.18,3.18,2026-10-01T10:23:47
+hardware,step05,ibm_marrakesh,dav39dahcrkc73e0jl10,No mitigation r1,3.18,3.18,2026-10-01T10:23:58
+hardware,step05,ibm_marrakesh,dav39frg95ks73ejbkog,DD r0,3.18,3.18,2026-10-01T10:24:09
+hardware,step05,ibm_marrakesh,dav39irojkfs738t4e9g,DD r1,3.18,3.18,2026-10-01T10:24:20
+hardware,step05,ibm_marrakesh,dav39lbojkfs738t4ec0,Twirling r0,3.18,3.18,2026-10-01T10:24:32
+hardware,step05,ibm_marrakesh,dav39ojg95ks73ejbl30,Twirling r1,3.18,3.18,2026-10-01T10:24:45
+hardware,step05,ibm_marrakesh,dav39rrg95ks73ejbl70,TREX r0,3.53,3.53,2026-10-01T10:25:08
+hardware,step05,ibm_marrakesh,dav3a1jg95ks73ejblc0,TREX r1,3.53,3.53,2026-10-01T10:25:31
+hardware,step05,ibm_marrakesh,dav3a73ojkfs738t4ev0,ZNE r0,12.61,12.61,2026-10-01T10:25:48
+hardware,step05,ibm_marrakesh,dav3abdvr3kc73enu83g,ZNE r1,12.61,12.61,2026-10-01T10:26:05
+hardware,step05,ibm_marrakesh,dav3afihcrkc73e0jmb0,All combined r0,15.79,15.79,2026-10-01T10:27:11
+hardware,step05,ibm_marrakesh,dav3b0ahcrkc73e0jn0g,All combined r1,15.79,15.79,2026-10-01T10:28:26
+hardware,readout_cal,ibm_kingston,dav3bj2hcrkc73e0jnk0,readout calibration,3.01,3.01,2026-10-01T10:29:35
+hardware,step06,ibm_kingston,dav3c4bg95ks73ejbnj0,K-SAT r0,4.63,4.63,2026-10-01T10:29:51
+hardware,step06,ibm_kingston,dav3c8jg95ks73ejbno0,K-SAT r1,4.63,4.63,2026-10-01T10:30:07
+hardware,step06,ibm_kingston,dav3ccahcrkc73e0joeg,K-SAT r2,4.63,4.63,2026-10-01T10:30:19
+hardware,readout_cal,ibm_marrakesh,dav3cfdvr3kc73enuae0,readout calibration,3.01,3.01,2026-10-01T10:30:29
+hardware,step06,ibm_marrakesh,dav3chihcrkc73e0jolg,K-SAT r0,4.68,4.68,2026-10-01T10:30:41
+hardware,step06,ibm_marrakesh,dav3ckjojkfs738t4hmg,K-SAT r1,4.68,4.68,2026-10-01T10:30:52
+hardware,step06,ibm_marrakesh,dav3cndvr3kc73enuang,K-SAT r2,4.68,4.68,2026-10-01T10:31:04
+hardware,step07,ibm_kingston,dav3cqrojkfs738t4hug,sweep r0,6.11,6.11,2026-10-01T10:31:19
+hardware,step07,ibm_kingston,dav3cu5vr3kc73enuavg,sweep r1,6.11,6.11,2026-10-01T10:31:32
+hardware,step07,ibm_kingston,dav3d1ihcrkc73e0jp80,sweep r2,6.11,6.11,2026-10-01T10:31:51
+hardware,step07,ibm_marrakesh,dav3d63g95ks73ejboog,sweep r0,6.13,6.13,2026-10-01T10:32:05
+hardware,step07,ibm_marrakesh,dav3d9lvr3kc73enubg0,sweep r1,6.13,6.13,2026-10-01T10:32:20
+hardware,step07,ibm_marrakesh,dav3ddrojkfs738t4iq0,sweep r2,6.13,6.13,2026-10-01T10:32:49
+hardware,step08,ibm_kingston,dav3dl2hcrkc73e0jq9g,scaling r0,14.76,14.76,2026-10-01T10:33:31
+hardware,step08,ibm_kingston,dav3dv3ojkfs738t4jj0,scaling r1,14.76,14.76,2026-10-01T10:33:54
+hardware,step08,ibm_kingston,dav3e55vr3kc73enucr0,scaling r2,14.76,14.76,2026-10-01T10:34:20
+hardware,step08,ibm_marrakesh,dav3ebdvr3kc73enud40,scaling r0,14.83,14.83,2026-10-01T10:36:48
+hardware,step08,ibm_marrakesh,dav3fhtvr3kc73enues0,scaling r1,14.83,14.83,2026-10-01T10:37:56
+hardware,step08,ibm_marrakesh,dav3g1bojkfs738t4m6g,scaling r2,14.83,14.83,2026-10-01T10:39:20

@@ -1,0 +1,49 @@
+backend,opt_level,mcx_synthesis,circuit,two_qubit_gates,depth
+ibm_kingston,1,default,"Grover n=5, k=1",135,461
+ibm_kingston,1,default,"K-SAT 5, oracle A, k=1",273,923
+ibm_kingston,1,default,"K-SAT 5, oracle B, k=1",362,860
+ibm_kingston,1,noaux_v24,"Grover n=5, k=1",135,461
+ibm_kingston,1,noaux_v24,"K-SAT 5, oracle A, k=1",273,923
+ibm_kingston,1,noaux_v24,"K-SAT 5, oracle B, k=1",587,1444
+ibm_kingston,1,noaux_hp24,"Grover n=5, k=1",195,707
+ibm_kingston,1,noaux_hp24,"K-SAT 5, oracle A, k=1",399,1408
+ibm_kingston,1,noaux_hp24,"K-SAT 5, oracle B, k=1",640,1557
+ibm_kingston,1,gray_code,"Grover n=5, k=1",151,464
+ibm_kingston,1,gray_code,"K-SAT 5, oracle A, k=1",305,924
+ibm_kingston,1,gray_code,"K-SAT 5, oracle B, k=1",652,1644
+ibm_kingston,3,default,"Grover n=5, k=1",127,358
+ibm_kingston,3,default,"K-SAT 5, oracle A, k=1",257,711
+ibm_kingston,3,default,"K-SAT 5, oracle B, k=1",328,713
+ibm_kingston,3,noaux_v24,"Grover n=5, k=1",127,358
+ibm_kingston,3,noaux_v24,"K-SAT 5, oracle A, k=1",257,711
+ibm_kingston,3,noaux_v24,"K-SAT 5, oracle B, k=1",481,1084
+ibm_kingston,3,noaux_hp24,"Grover n=5, k=1",143,499
+ibm_kingston,3,noaux_hp24,"K-SAT 5, oracle A, k=1",291,987
+ibm_kingston,3,noaux_hp24,"K-SAT 5, oracle B, k=1",476,1174
+ibm_kingston,3,gray_code,"Grover n=5, k=1",132,350
+ibm_kingston,3,gray_code,"K-SAT 5, oracle A, k=1",263,686
+ibm_kingston,3,gray_code,"K-SAT 5, oracle B, k=1",571,1204
+ibm_marrakesh,1,default,"Grover n=5, k=1",135,461
+ibm_marrakesh,1,default,"K-SAT 5, oracle A, k=1",273,923
+ibm_marrakesh,1,default,"K-SAT 5, oracle B, k=1",362,860
+ibm_marrakesh,1,noaux_v24,"Grover n=5, k=1",135,461
+ibm_marrakesh,1,noaux_v24,"K-SAT 5, oracle A, k=1",273,923
+ibm_marrakesh,1,noaux_v24,"K-SAT 5, oracle B, k=1",587,1444
+ibm_marrakesh,1,noaux_hp24,"Grover n=5, k=1",195,707
+ibm_marrakesh,1,noaux_hp24,"K-SAT 5, oracle A, k=1",399,1408
+ibm_marrakesh,1,noaux_hp24,"K-SAT 5, oracle B, k=1",640,1557
+ibm_marrakesh,1,gray_code,"Grover n=5, k=1",151,464
+ibm_marrakesh,1,gray_code,"K-SAT 5, oracle A, k=1",305,924
+ibm_marrakesh,1,gray_code,"K-SAT 5, oracle B, k=1",652,1644
+ibm_marrakesh,3,default,"Grover n=5, k=1",127,359
+ibm_marrakesh,3,default,"K-SAT 5, oracle A, k=1",257,714
+ibm_marrakesh,3,default,"K-SAT 5, oracle B, k=1",328,715
+ibm_marrakesh,3,noaux_v24,"Grover n=5, k=1",127,359
+ibm_marrakesh,3,noaux_v24,"K-SAT 5, oracle A, k=1",257,714
+ibm_marrakesh,3,noaux_v24,"K-SAT 5, oracle B, k=1",481,1086
+ibm_marrakesh,3,noaux_hp24,"Grover n=5, k=1",143,499
+ibm_marrakesh,3,noaux_hp24,"K-SAT 5, oracle A, k=1",291,987
+ibm_marrakesh,3,noaux_hp24,"K-SAT 5, oracle B, k=1",476,1162
+ibm_marrakesh,3,gray_code,"Grover n=5, k=1",132,351
+ibm_marrakesh,3,gray_code,"K-SAT 5, oracle A, k=1",263,687
+ibm_marrakesh,3,gray_code,"K-SAT 5, oracle B, k=1",571,1204

@@ -1,0 +1,11 @@
+step,backend,jobs,qpu_seconds
+readout_cal,ibm_kingston,1,3.01
+readout_cal,ibm_marrakesh,1,3.01
+step05,ibm_kingston,12,82.32000000000001
+step05,ibm_marrakesh,12,82.94
+step06,ibm_kingston,3,13.89
+step06,ibm_marrakesh,3,14.04
+step07,ibm_kingston,3,18.330000000000002
+step07,ibm_marrakesh,3,18.39
+step08,ibm_kingston,3,44.28
+step08,ibm_marrakesh,3,44.49
