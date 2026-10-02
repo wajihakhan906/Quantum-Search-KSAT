@@ -1,0 +1,17 @@
+backend,n,k,version,P_valid,sd,shots_to_solution,random_shots,ideal_shots
+ibm_kingston,5,1,No mitigation,0.3833,0.0055,2.6087,10.6667,1.548
+ibm_kingston,5,1,Readout corr.,0.425,0.0062,2.3528,10.6667,1.548
+ibm_kingston,5,2,No mitigation,0.4048,0.0099,2.4702,10.6667,1.0002
+ibm_kingston,5,2,Readout corr.,0.4491,0.0109,2.2266,10.6667,1.0002
+ibm_kingston,6,1,No mitigation,0.1345,0.0058,7.4349,21.3333,2.697
+ibm_kingston,6,1,Readout corr.,0.1504,0.006,6.6483,21.3333,2.697
+ibm_kingston,6,3,No mitigation,0.0835,0.0013,11.976,21.3333,1.0019
+ibm_kingston,6,3,Readout corr.,0.1153,0.0041,8.6763,21.3333,1.0019
+ibm_marrakesh,5,1,No mitigation,0.3772,0.0103,2.6513,10.6667,1.548
+ibm_marrakesh,5,1,Readout corr.,0.3854,0.0106,2.595,10.6667,1.548
+ibm_marrakesh,5,2,No mitigation,0.353,0.0083,2.8329,10.6667,1.0002
+ibm_marrakesh,5,2,Readout corr.,0.3611,0.0081,2.7694,10.6667,1.0002
+ibm_marrakesh,6,1,No mitigation,0.1132,0.0101,8.8365,21.3333,2.697
+ibm_marrakesh,6,1,Readout corr.,0.1157,0.0106,8.6423,21.3333,2.697
+ibm_marrakesh,6,3,No mitigation,0.0648,0.0045,15.4242,21.3333,1.0019
+ibm_marrakesh,6,3,Readout corr.,0.0651,0.0046,15.3606,21.3333,1.0019

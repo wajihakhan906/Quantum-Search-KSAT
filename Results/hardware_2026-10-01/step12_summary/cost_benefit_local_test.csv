@@ -1,0 +1,13 @@
+backend,config,mean_gain,mean_abs_error,relative_cost
+ibm_kingston,All combined,0.9878,0.1009,4.9381
+ibm_kingston,DD,1.0085,0.0988,1.0
+ibm_kingston,No mitigation,1.0,0.1005,1.0
+ibm_kingston,TREX,1.0587,0.095,1.1104
+ibm_kingston,Twirling,0.9658,0.1019,1.0
+ibm_kingston,ZNE,1.0513,0.0964,3.9444
+ibm_marrakesh,All combined,0.9841,0.0877,4.9622
+ibm_marrakesh,DD,1.0342,0.0853,1.0
+ibm_marrakesh,No mitigation,1.0,0.0866,1.0
+ibm_marrakesh,TREX,0.9876,0.0878,1.1111
+ibm_marrakesh,Twirling,1.0342,0.0855,1.0
+ibm_marrakesh,ZNE,1.0298,0.0855,3.9624
