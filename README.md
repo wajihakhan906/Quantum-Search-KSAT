@@ -16,6 +16,11 @@ propagate through the circuit on IBM Brisbane (127-qubit Eagle).
 
 ![Grover circuit](Figures/circuit_fake_brisbane_v3_c3_s3.png)
 
+## HAGCS: Hardware-Aware Grover Configuration Selection
+The folder [`HAGCS/`](HAGCS/) contains the code, results, and figures of the hardware-aware configuration-selection
+study: the full six-stage pipeline on `ibm_kingston` and `ibm_marrakesh` (88 primary configurations, 184 records).
+See [`HAGCS/README.md`](HAGCS/README.md).
+
 ## Repository Structure
 ```
 Quantum-Search-KSAT/
